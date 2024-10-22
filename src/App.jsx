@@ -1,10 +1,30 @@
-import { useState } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+
+  const fetchFromBackend = useCallback(() => {
+    fetch('https://test-backend-2uad.onrender.com')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok')
+        }
+        return response.json()
+      })
+      .then((result) => {
+        console.log(result)
+      })
+      .catch((error) => {
+        console.error('Error fetching', error)
+      })
+  }, [])
+
+  useEffect(() => {
+    fetchFromBackend()
+  })
 
   return (
     <>
