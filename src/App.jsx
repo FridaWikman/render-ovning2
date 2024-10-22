@@ -5,6 +5,7 @@ import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [data, setData] = useState(null)
 
   const fetchFromBackend = useCallback(() => {
     fetch('https://test-backend-2uad.onrender.com')
@@ -16,6 +17,7 @@ function App() {
       })
       .then((result) => {
         console.log(result)
+        setData(result)
       })
       .catch((error) => {
         console.error('Error fetching', error)
@@ -24,7 +26,7 @@ function App() {
 
   useEffect(() => {
     fetchFromBackend()
-  })
+  }, [fetchFromBackend])
 
   return (
     <>
@@ -37,6 +39,7 @@ function App() {
         </a>
       </div>
       <h1>Vite + React and my new changes</h1>
+      {data && <p>{data.hello}</p>}
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
